@@ -12,6 +12,7 @@
 		AD07F4A32C4D8F18005F9B9F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD07F4A22C4D8F18005F9B9F /* Assets.xcassets */; };
 		AD07F4A72C4D8F18005F9B9F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD07F4A62C4D8F18005F9B9F /* Preview Assets.xcassets */; };
 		AD07F4AE2C4D900A005F9B9F /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07F4AD2C4D900A005F9B9F /* CircleView.swift */; };
+		AD6D12AC2C4EF29F00378313 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D12AB2C4EF29F00378313 /* ItemModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		AD07F4A42C4D8F18005F9B9F /* Circle_Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Circle_Menu.entitlements; sourceTree = "<group>"; };
 		AD07F4A62C4D8F18005F9B9F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AD07F4AD2C4D900A005F9B9F /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		AD6D12AB2C4EF29F00378313 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		AD07F49D2C4D8F16005F9B9F /* Circle Menu */ = {
 			isa = PBXGroup;
 			children = (
+				AD6D12AA2C4EF28D00378313 /* Models */,
 				AD07F4AF2C4D904A005F9B9F /* Views */,
 				AD07F49E2C4D8F16005F9B9F /* Circle_MenuApp.swift */,
 				AD07F4A02C4D8F16005F9B9F /* ContentView.swift */,
@@ -78,6 +81,14 @@
 				AD07F4AD2C4D900A005F9B9F /* CircleView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AD6D12AA2C4EF28D00378313 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AD6D12AB2C4EF29F00378313 /* ItemModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +163,7 @@
 			files = (
 				AD07F4AE2C4D900A005F9B9F /* CircleView.swift in Sources */,
 				AD07F4A12C4D8F16005F9B9F /* ContentView.swift in Sources */,
+				AD6D12AC2C4EF29F00378313 /* ItemModel.swift in Sources */,
 				AD07F49F2C4D8F16005F9B9F /* Circle_MenuApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var items: [ItemModel] = {
+        return [
+        ItemModel(),
+        ItemModel(),
+        ItemModel()
+        ]
+    }()
     var body: some View {
-        CircleView()
+        CircleView(items: $items)
     }
 }
 #Preview {

@@ -12,6 +12,8 @@ struct CircleView: View {
     var distance: CGFloat = 120.0
     var buttonHeight: CGFloat = 55.0
     
+    @Binding var items: [ItemModel]
+    
     var body: some View {
         Rectangle()
             .fill(.purple)
@@ -21,8 +23,8 @@ struct CircleView: View {
             .overlay {
                 ZStack {
                     plusView()
-                    ForEach(0...2, id: \.self) { index in
-                        itemView(index)
+                    ForEach(items) { item in
+                        itemView(item)
                     }
                 }
             }
@@ -47,12 +49,12 @@ extension CircleView {
 
 extension CircleView {
     @ViewBuilder
-    private func itemView(_ index: Int) -> some View {
+    private func itemView(_ item: ItemModel) -> some View {
         RoundedRectangle(cornerRadius: buttonHeight/2)
             .foregroundColor(.red)
             .frame(width: buttonHeight, height: buttonHeight)
             .offset(x: -distance)
-            .rotationEffect(.degrees(Double(index * 10)))
+            .rotationEffect(.degrees(item.angle))
     }}
 
 #Preview {
