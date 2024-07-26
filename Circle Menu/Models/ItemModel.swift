@@ -11,4 +11,6 @@ struct ItemModel: Identifiable, Hashable {
     
     var id: Int = 0
     var angle: Double = 0.0
+    var icon: String
+    var color: Color
 }

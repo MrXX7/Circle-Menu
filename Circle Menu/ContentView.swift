@@ -11,9 +11,9 @@ struct ContentView: View {
     
     @State private var items: [ItemModel] = {
         return [
-        ItemModel(),
-        ItemModel(),
-        ItemModel()
+            ItemModel(icon: "heart.fill", color: .yellow),
+            ItemModel(icon: "cloud.fill", color: .red),
+            ItemModel(icon: "folder.fill", color: .cyan)
         ]
     }()
     var body: some View {
