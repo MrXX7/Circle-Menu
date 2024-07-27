@@ -81,8 +81,21 @@ extension CircleView {
     @ViewBuilder
     private func itemView(_ item: ItemModel) -> some View {
         RoundedRectangle(cornerRadius: buttonHeight/2)
+            .fill(.clear)
             .foregroundColor(.red)
             .frame(width: buttonHeight, height: buttonHeight)
+            .overlay {
+                Button {
+                    print(item.id)
+                } label: {
+                    Image(systemName: item.icon)
+                        .frame(width: buttonHeight, height: buttonHeight)
+                        .tint(.white)
+                        .background(item.color)
+                        .clipShape(.rect(cornerRadius: buttonHeight/2))
+                }
+                .rotationEffect(.degrees(-item.angle))
+            }
             .offset(x: -distance)
             .rotationEffect(.degrees(item.angle))
     }}
