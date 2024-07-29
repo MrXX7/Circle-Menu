@@ -17,6 +17,10 @@ struct CircleView: View {
     
     @Binding var items: [ItemModel]
     
+    @State private var plusDegrees: Double = 0.0
+    @State private var plusOpacity: Double = 1.0
+    @State private var plusScale: Double = 1.0
+    
     var body: some View {
         Rectangle()
             .fill(.purple)
@@ -66,6 +70,7 @@ extension CircleView {
     private func plusView() -> some View {
         Button {
             print("plus did tap")
+            plusDidTap()
         } label: {
             Image(systemName: "plus.circle.fill")
                 .resizable()
@@ -73,6 +78,15 @@ extension CircleView {
                 .frame(width: buttonHeight, height: buttonHeight)
                 .clipShape(.rect(cornerRadius: buttonHeight/2))
                 .foregroundStyle(.black)
+        }
+        .rotationEffect(.degrees(plusDegrees))
+        .opacity(plusOpacity)
+    }
+    fileprivate func plusDidTap() {
+        withAnimation(.linear) {
+            plusDegrees = plusDegrees == 45 ? 0 : 45
+            plusOpacity = plusDegrees == 45 ? 0.4 : 1
+        } completion: {
         }
     }
 }
