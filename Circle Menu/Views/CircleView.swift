@@ -19,7 +19,7 @@ struct CircleView: View {
     
     @State private var plusDegrees: Double = 0.0
     @State private var plusOpacity: Double = 1.0
-    @State private var plusScale: Double = 1.0
+    @State private var plusScale: Bool = false
     
     var body: some View {
         Rectangle()
@@ -80,12 +80,17 @@ extension CircleView {
                 .foregroundStyle(.black)
         }
         .rotationEffect(.degrees(plusDegrees))
+        .scaleEffect(plusScale ? 0.9 : 1)
         .opacity(plusOpacity)
     }
     fileprivate func plusDidTap() {
-        withAnimation(.linear) {
+        plusScale.toggle()
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
             plusDegrees = plusDegrees == 45 ? 0 : 45
             plusOpacity = plusDegrees == 45 ? 0.4 : 1
+            
+            plusScale.toggle()
+            
         } completion: {
         }
     }
