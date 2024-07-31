@@ -20,6 +20,8 @@ struct CircleView: View {
     @State private var plusDegrees: Double = 0.0
     @State private var plusOpacity: Double = 1.0
     @State private var plusScale: Bool = false
+    @State private var isBounceAnimating: Bool = false
+    @State private var isDistance: Double = 0.0
     
     var body: some View {
         Rectangle()
@@ -69,6 +71,11 @@ extension CircleView {
     @ViewBuilder
     private func plusView() -> some View {
         Button {
+            guard !isBounceAnimating else {
+                return
+            }
+            isBounceAnimating = true
+            
             print("plus did tap")
             plusDidTap()
         } label: {
@@ -79,6 +86,7 @@ extension CircleView {
                 .clipShape(.rect(cornerRadius: buttonHeight/2))
                 .foregroundStyle(.black)
         }
+        .zIndex(5)
         .rotationEffect(.degrees(plusDegrees))
         .scaleEffect(plusScale ? 0.9 : 1)
         .opacity(plusOpacity)
@@ -91,7 +99,10 @@ extension CircleView {
             
             plusScale.toggle()
             
+            isDistance = plusDegrees == 45 ? distance : 0.0
+            
         } completion: {
+            isBounceAnimating = false
         }
     }
 }
@@ -115,8 +126,10 @@ extension CircleView {
                 }
                 .rotationEffect(.degrees(-item.angle))
             }
-            .offset(x: -distance)
+            .offset(x: -isDistance)
             .rotationEffect(.degrees(item.angle))
+            .scaleEffect(isDistance == 0 ? 0.0 : 1.0)
+            .opacity(isDistance == 0 ? 0.0 : 1.0)
     }}
 
 #Preview {
