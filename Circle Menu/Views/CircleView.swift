@@ -21,7 +21,7 @@ struct CircleView: View {
     @State private var plusOpacity: Double = 1.0
     @State private var plusScale: Bool = false
     @State private var isBounceAnimating: Bool = false
-    @State private var isDistance: Double = 0.0
+    @State private var setDistance: Double = 0.0
     
     var body: some View {
         Rectangle()
@@ -35,6 +35,7 @@ struct CircleView: View {
                     ForEach(items) { item in
                         itemView(item)
                     }
+                    strokeView()
                 }
             }
             .onAppear {
@@ -99,7 +100,7 @@ extension CircleView {
             
             plusScale.toggle()
             
-            isDistance = plusDegrees == 45 ? distance : 0.0
+            setDistance = plusDegrees == 45 ? distance : 0.0
             
         } completion: {
             isBounceAnimating = false
@@ -126,11 +127,32 @@ extension CircleView {
                 }
                 .rotationEffect(.degrees(-item.angle))
             }
-            .offset(x: -isDistance)
+            .offset(x: -setDistance)
             .rotationEffect(.degrees(item.angle))
-            .scaleEffect(isDistance == 0 ? 0.0 : 1.0)
-            .opacity(isDistance == 0 ? 0.0 : 1.0)
+            .scaleEffect(setDistance == 0 ? 0.0 : 1.0)
+            .opacity(setDistance == 0 ? 0.0 : 1.0)
     }}
+
+extension CircleView {
+    @ViewBuilder
+    private func strokeView() -> some View {
+        Rectangle()
+            .fill(.clear)
+            .overlay {
+                Circle()
+                    .trim(from: 0.0, to: 1.0)
+                    .stroke(
+                        Color.blue,
+                        style: StrokeStyle(
+                            lineWidth: buttonHeight,
+                            lineCap: .round,
+                            lineJoin: .round
+                        )
+                    )
+                    .frame(width: setDistance*2, height: setDistance*2)
+            }
+    }
+}
 
 #Preview {
     ContentView()
