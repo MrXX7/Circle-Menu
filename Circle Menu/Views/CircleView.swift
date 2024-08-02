@@ -22,6 +22,9 @@ struct CircleView: View {
     @State private var plusScale: Bool = false
     @State private var isBounceAnimating: Bool = false
     @State private var setDistance: Double = 0.0
+    @State private var cirStrokeTo: Double = 0.0
+    @State private var cirAngle: Double = 0.0
+    @State private var cirStrokeScale: Double = 0.0
     
     var body: some View {
         Rectangle()
@@ -117,7 +120,13 @@ extension CircleView {
             .frame(width: buttonHeight, height: buttonHeight)
             .overlay {
                 Button {
-                    print(item.id)
+                    
+                    cirAngle = item.angle
+                    withAnimation(.easeInOut(duration: 2.0)) {
+                        cirStrokeTo = 1.0
+                    } completion: {
+                        cirStrokeTo = 0.0
+                    }
                 } label: {
                     Image(systemName: item.icon)
                         .frame(width: buttonHeight, height: buttonHeight)
@@ -127,6 +136,7 @@ extension CircleView {
                 }
                 .rotationEffect(.degrees(-item.angle))
             }
+        zIndex(2.0)
             .offset(x: -setDistance)
             .rotationEffect(.degrees(item.angle))
             .scaleEffect(setDistance == 0 ? 0.0 : 1.0)
@@ -137,10 +147,10 @@ extension CircleView {
     @ViewBuilder
     private func strokeView() -> some View {
         Rectangle()
-            .fill(.clear)
+            .fill(.orange)
             .overlay {
                 Circle()
-                    .trim(from: 0.0, to: 1.0)
+                    .trim(from: 0.0, to: cirStrokeTo)
                     .stroke(
                         Color.blue,
                         style: StrokeStyle(
@@ -149,8 +159,10 @@ extension CircleView {
                             lineJoin: .round
                         )
                     )
+                    .scaleEffect(x: cirStrokeScale, y: cirStrokeScale)
                     .frame(width: setDistance*2, height: setDistance*2)
             }
+            .rotationEffect(.degrees(-180+cirAngle))
     }
 }
 
