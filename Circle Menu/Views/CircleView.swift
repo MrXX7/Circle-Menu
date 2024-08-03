@@ -24,7 +24,9 @@ struct CircleView: View {
     @State private var setDistance: Double = 0.0
     @State private var cirStrokeTo: Double = 0.0
     @State private var cirAngle: Double = 0.0
-    @State private var cirStrokeScale: Double = 0.0
+    @State private var cirStrokeScale: Double = 1.0
+    @State private var cirStrokeOpacity: Double = 1.0
+    @State private var cirStrokeColor: Color = .clear
     
     var body: some View {
         Rectangle()
@@ -116,16 +118,24 @@ extension CircleView {
     private func itemView(_ item: ItemModel) -> some View {
         RoundedRectangle(cornerRadius: buttonHeight/2)
             .fill(.clear)
-            .foregroundColor(.red)
             .frame(width: buttonHeight, height: buttonHeight)
             .overlay {
                 Button {
-                    
                     cirAngle = item.angle
+                    cirStrokeColor = item.color
                     withAnimation(.easeInOut(duration: 2.0)) {
                         cirStrokeTo = 1.0
                     } completion: {
-                        cirStrokeTo = 0.0
+                        
+                        withAnimation(.easeOut, completionCriteria:
+                                .removed) {
+                                    cirStrokeScale = 1.2
+                                    cirStrokeOpacity = 0.0
+                                } completion: {
+                                    cirStrokeScale = 1.0
+                                    cirStrokeTo = 0.0
+                                    cirStrokeOpacity = 1.0
+                                }
                     }
                 } label: {
                     Image(systemName: item.icon)
@@ -136,7 +146,7 @@ extension CircleView {
                 }
                 .rotationEffect(.degrees(-item.angle))
             }
-        zIndex(2.0)
+            .zIndex(2.0)
             .offset(x: -setDistance)
             .rotationEffect(.degrees(item.angle))
             .scaleEffect(setDistance == 0 ? 0.0 : 1.0)
@@ -147,12 +157,12 @@ extension CircleView {
     @ViewBuilder
     private func strokeView() -> some View {
         Rectangle()
-            .fill(.orange)
+            .fill(.clear)
             .overlay {
                 Circle()
                     .trim(from: 0.0, to: cirStrokeTo)
                     .stroke(
-                        Color.blue,
+                        cirStrokeColor,
                         style: StrokeStyle(
                             lineWidth: buttonHeight,
                             lineCap: .round,
@@ -160,6 +170,7 @@ extension CircleView {
                         )
                     )
                     .scaleEffect(x: cirStrokeScale, y: cirStrokeScale)
+                    .opacity(cirStrokeOpacity)
                     .frame(width: setDistance*2, height: setDistance*2)
             }
             .rotationEffect(.degrees(-180+cirAngle))
