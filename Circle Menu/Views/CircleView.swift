@@ -27,10 +27,11 @@ struct CircleView: View {
     @State private var cirStrokeScale: Double = 1.0
     @State private var cirStrokeOpacity: Double = 1.0
     @State private var cirStrokeColor: Color = .clear
+    @State private var cirStrokeColorOpacity: Double = 0.0
     
     var body: some View {
         Rectangle()
-            .fill(.purple)
+            .fill(.clear)
             .frame(
                 width: distance*2+buttonHeight,
                 height: distance*2+buttonHeight)
@@ -121,10 +122,17 @@ extension CircleView {
             .frame(width: buttonHeight, height: buttonHeight)
             .overlay {
                 Button {
+                    guard let index = items.firstIndex(where: { $0.id == item.id }) else {
+                        return
+                    }
+                    
                     cirAngle = item.angle
                     cirStrokeColor = item.color
                     withAnimation(.easeInOut(duration: 2.0)) {
+                        items[index].angle = cirAngle + 360
                         cirStrokeTo = 1.0
+                        cirStrokeColorOpacity = 1.0
+                        
                     } completion: {
                         
                         withAnimation(.easeOut, completionCriteria:
@@ -135,6 +143,8 @@ extension CircleView {
                                     cirStrokeScale = 1.0
                                     cirStrokeTo = 0.0
                                     cirStrokeOpacity = 1.0
+                                    cirStrokeColor = .clear
+                                    cirStrokeColorOpacity = 0.0
                                 }
                     }
                 } label: {
