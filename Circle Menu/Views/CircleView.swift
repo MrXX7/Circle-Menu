@@ -130,11 +130,15 @@ extension CircleView {
                     cirStrokeColor = item.color
                     withAnimation(.easeInOut(duration: 2.0)) {
                         items[index].angle = cirAngle + 360
+                        items[index].zIndex = 2.0
+                        
                         cirStrokeTo = 1.0
                         cirStrokeColorOpacity = 1.0
                         
                     } completion: {
                         items[index].angle = cirAngle
+                        items[index].zIndex = 1.0
+                        
                         withAnimation(.easeOut, completionCriteria:
                                 .removed) {
                                     cirStrokeScale = 1.2
@@ -156,7 +160,7 @@ extension CircleView {
                 }
                 .rotationEffect(.degrees(-item.angle))
             }
-            .zIndex(2.0)
+            .zIndex(item.zIndex)
             .offset(x: -setDistance)
             .rotationEffect(.degrees(item.angle))
             .scaleEffect(setDistance == 0 ? 0.0 : 1.0)
@@ -191,6 +195,7 @@ extension CircleView {
                     .opacity(cirStrokeOpacity)
                     .frame(width: setDistance*2, height: setDistance*2)
             }
+            .zIndex(1.0)
             .rotationEffect(.degrees(-180+cirAngle))
     }
 }
