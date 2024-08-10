@@ -9,11 +9,12 @@ import SwiftUI
 
 struct CircleView: View {
     
-    var distance: CGFloat = 120.0
+    var distance: CGFloat = 80.0
     var buttonHeight: CGFloat = 55.0
     
     var startAngle: Double = 0.0
-    var endAngle: Double = 120.0
+    var endAngle: Double = 360.0
+    var duration: Double = 0.33
     
     @Binding var items: [ItemModel]
     
@@ -102,11 +103,11 @@ extension CircleView {
         plusScale.toggle()
         withAnimation(.spring(response: 0.4, dampingFraction: 0.6)) {
             plusDegrees = plusDegrees == 45 ? 0 : 45
-            plusOpacity = plusDegrees == 45 ? 0.4 : 1
+            plusOpacity = plusDegrees == 45 ? 0.4 : 1.0
             
             plusScale.toggle()
             
-            setDistance = plusDegrees == 45 ? distance : 0.0
+            setDistance = plusDegrees == 45 ? (distance <= 80 ? 80 : distance) : 0.0
             
         } completion: {
             isBounceAnimating = false
@@ -128,7 +129,8 @@ extension CircleView {
                     
                     cirAngle = item.angle
                     cirStrokeColor = item.color
-                    withAnimation(.easeInOut(duration: 2.0)) {
+                    
+                    withAnimation(.easeInOut(duration: duration)) {
                         items[index].angle = cirAngle + 360
                         items[index].zIndex = 2.0
                         
@@ -143,12 +145,16 @@ extension CircleView {
                                 .removed) {
                                     cirStrokeScale = 1.2
                                     cirStrokeOpacity = 0.0
+                                    
                                 } completion: {
                                     cirStrokeScale = 1.0
                                     cirStrokeTo = 0.0
                                     cirStrokeOpacity = 1.0
                                     cirStrokeColor = .clear
                                     cirStrokeColorOpacity = 0.0
+                                    cirAngle = 0.0
+                                    
+                                    plusDidTap()
                                 }
                     }
                 } label: {
