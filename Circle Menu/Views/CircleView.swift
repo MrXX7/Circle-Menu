@@ -134,7 +134,7 @@ extension CircleView {
                         cirStrokeColorOpacity = 1.0
                         
                     } completion: {
-                        
+                        items[index].angle = cirAngle
                         withAnimation(.easeOut, completionCriteria:
                                 .removed) {
                                     cirStrokeScale = 1.2
@@ -161,6 +161,14 @@ extension CircleView {
             .rotationEffect(.degrees(item.angle))
             .scaleEffect(setDistance == 0 ? 0.0 : 1.0)
             .opacity(setDistance == 0 ? 0.0 : 1.0)
+        
+        if cirStrokeColor != .clear {
+            RoundedRectangle(cornerRadius: buttonHeight/2)
+                .fill(cirStrokeColor)
+                .frame(width: buttonHeight, height: buttonHeight)
+                .offset(x: -setDistance)
+                .rotationEffect(.degrees(cirAngle))
+        }
     }}
 
 extension CircleView {
