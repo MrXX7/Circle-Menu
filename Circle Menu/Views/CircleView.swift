@@ -18,6 +18,8 @@ struct CircleView: View {
     
     @Binding var items: [ItemModel]
     
+    var completion: (ItemModel) -> ()
+    
     @State private var plusDegrees: Double = 0.0
     @State private var plusOpacity: Double = 1.0
     @State private var plusScale: Bool = false
@@ -147,6 +149,8 @@ extension CircleView {
                                     cirStrokeOpacity = 0.0
                                     
                                 } completion: {
+                                    completion(item)
+                                    
                                     cirStrokeScale = 1.0
                                     cirStrokeTo = 0.0
                                     cirStrokeOpacity = 1.0

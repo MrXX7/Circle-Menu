@@ -23,7 +23,10 @@ struct ContentView: View {
         ]
     }()
     var body: some View {
-        CircleView(items: $items)
+        CircleView(items: $items) { item in
+            print("Complete", item.id)
+            
+        }
     }
 }
 #Preview {
