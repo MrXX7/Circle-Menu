@@ -85,8 +85,6 @@ extension CircleView {
                 return
             }
             isBounceAnimating = true
-            
-            print("plus did tap")
             plusDidTap()
         } label: {
             Image(systemName: "plus.circle.fill")
