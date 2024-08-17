@@ -9,11 +9,11 @@ import SwiftUI
 
 struct CircleView: View {
     
-    var distance: CGFloat = 80.0
+    var distance: CGFloat = 120.0
     var buttonHeight: CGFloat = 55.0
     
     var startAngle: Double = 0.0
-    var endAngle: Double = 360.0
+    var endAngle: Double = 120.0
     var duration: Double = 0.33
     
     @Binding var items: [ItemModel]
